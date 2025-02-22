@@ -108,15 +108,23 @@ export default function TerminalPreview() {
                   <span className="ml-2 text-white">{currentCommand}</span>
                 </div>
               )}
-              <div className="whitespace-pre font-mono h-[400px] overflow-y-auto scrollbar-thin scrollbar-thumb-gray-700 scrollbar-track-transparent">
-                {output.map((line, i) => (
-                  <div key={i} className={`leading-tight ${line.startsWith?.('✓') ? 'text-green-400' : line.color || 'text-white'}`}>
-                    {line.text}
-                  </div>
-                ))}
-                {isTyping && (
-                  <span className="animate-pulse text-green-400">▊</span>
-                )}
+              <div className="terminal-scroll whitespace-pre font-mono h-[400px] overflow-y-auto bg-[#1a1b26] relative">
+                <div className="min-h-full">
+                  {output.map((line, i) => (
+                    <div 
+                      key={i} 
+                      className={`terminal-line leading-tight ${
+                        line.text.startsWith('✓') ? 'text-green-400' : line.color || 'text-white'
+                      }`}
+                      style={{ animationDelay: `${i * 50}ms` }}
+                    >
+                      {line.text}
+                    </div>
+                  ))}
+                  {isTyping && (
+                    <span className="animate-pulse text-green-400">▊</span>
+                  )}
+                </div>
               </div>
             </div>
           </div>

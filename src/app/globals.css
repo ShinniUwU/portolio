@@ -13,3 +13,78 @@ body {
   background: rgb(var(--background-start-rgb));
   font-family: var(--font-dosis), Arial, Helvetica, sans-serif;
 }
+
+/* Base scrollbar styles */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #4B5563 transparent;
+}
+
+/* Webkit scrollbar styles for the website */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+  border-radius: 20px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(75, 85, 99, 0.8);
+  border-radius: 20px;
+  border: 2px solid transparent;
+  background-clip: padding-box;
+  transition: all 0.3s ease;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(107, 114, 128, 0.9);
+  border: 2px solid transparent;
+  background-clip: padding-box;
+}
+
+/* Terminal specific scrollbar */
+.terminal-scroll {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(55, 65, 81, 0.8) transparent;
+}
+
+.terminal-scroll::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+.terminal-scroll::-webkit-scrollbar-track {
+  background: transparent;
+  border-radius: 20px;
+}
+
+.terminal-scroll::-webkit-scrollbar-thumb {
+  background: rgba(55, 65, 81, 0.8);
+  border-radius: 20px;
+  border: 2px solid transparent;
+  background-clip: padding-box;
+  transition: all 0.3s ease;
+}
+
+.terminal-scroll::-webkit-scrollbar-thumb:hover {
+  background: rgba(75, 85, 99, 0.9);
+  border: 2px solid transparent;
+  background-clip: padding-box;
+}
+
+/* Terminal line animation */
+.terminal-line {
+  opacity: 0;
+  transform: translateY(10px);
+  animation: terminalLine 0.3s ease forwards;
+}
+
+@keyframes terminalLine {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
