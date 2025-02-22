@@ -12,6 +12,7 @@ module.exports = {
       animation: {
         'gradient': 'gradient 15s ease infinite',
         'float': 'float 6s ease-in-out infinite',
+        'pulse': 'pulse 2s ease-in-out infinite',
       },
       keyframes: {
         gradient: {
@@ -32,8 +33,18 @@ module.exports = {
             transform: 'translateY(-20px)',
           },
         },
+        pulse: {
+          '0%, 100%': {
+            transform: 'scale(1)',
+          },
+          '50%': {
+            transform: 'scale(1.1)',
+          },
+        },
       },
     },
   },
-  plugins: [],
+  plugins: [
+    require('@tailwindcss/typography'),
+  ],
 } 
