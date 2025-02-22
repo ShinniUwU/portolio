@@ -6,6 +6,7 @@ import Background from '@/app/(home)/background/page'
 import Hero from '@/app/(home)/hero/page'
 import Features from '@/app/(home)/features/page'
 import Install from '@/app/(home)/install/page'
+import TerminalPreview from '@/components/sections/terminal-preview'
 
 export default function Home() {
   return (
@@ -17,6 +18,7 @@ export default function Home() {
         <Navbar />
         <Hero />
         <Features />
+        <TerminalPreview />
         <Install />
         <Footer />
       </div>

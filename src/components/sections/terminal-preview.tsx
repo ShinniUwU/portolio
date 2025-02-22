@@ -8,9 +8,14 @@ interface OutputLine {
   color?: string
 }
 
+interface OutputItem {
+  text: string
+  color?: string
+}
+
 export default function TerminalPreview() {
   const [currentCommand, setCurrentCommand] = useState("")
-  const [output, setOutput] = useState<string[]>([])
+  const [output, setOutput] = useState<OutputItem[]>([])
   const [isTyping, setIsTyping] = useState(false)
   const [cleared, setCleared] = useState(false)
 
@@ -67,8 +72,9 @@ export default function TerminalPreview() {
 
     const showInstallation = (stepIndex: number) => {
       if (stepIndex < installationSteps.length) {
-        setOutput(prev => [...prev, installationSteps[stepIndex].text])
-        timeoutId = setTimeout(() => showInstallation(stepIndex + 1), installationSteps[stepIndex].delay)
+        const step = installationSteps[stepIndex]
+        setOutput(prev => [...prev, { text: step.text, color: step.color }])
+        timeoutId = setTimeout(() => showInstallation(stepIndex + 1), step.delay)
       } else {
         setIsTyping(false)
       }
@@ -102,16 +108,16 @@ export default function TerminalPreview() {
                   <span className="ml-2 text-white">{currentCommand}</span>
                 </div>
               )}
-              <div className="whitespace-pre font-mono">
+              <div className="whitespace-pre font-mono h-[400px] overflow-y-auto scrollbar-thin scrollbar-thumb-gray-700 scrollbar-track-transparent">
                 {output.map((line, i) => (
-                  <div key={i} className={`leading-tight ${line.startsWith('✓') ? 'text-green-400' : line.color || 'text-white'}`}>
-                    {line}
+                  <div key={i} className={`leading-tight ${line.startsWith?.('✓') ? 'text-green-400' : line.color || 'text-white'}`}>
+                    {line.text}
                   </div>
                 ))}
+                {isTyping && (
+                  <span className="animate-pulse text-green-400">▊</span>
+                )}
               </div>
-              {isTyping && (
-                <span className="animate-pulse text-green-400">▊</span>
-              )}
             </div>
           </div>
         </div>
