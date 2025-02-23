@@ -20,5 +20,11 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: 'weekly',
       priority: 0.5,
     },
+    {
+      url: 'https://lunarshell.dev/statistics',
+      lastModified: new Date(),
+      changeFrequency: 'daily',
+      priority: 0.5,
+    }
   ]
 } 
