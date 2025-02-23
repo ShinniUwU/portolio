@@ -4,7 +4,6 @@ import { useState } from 'react'
 import Navbar from '@/components/Navbar'
 import Footer from '@/components/Footer'
 import Background from '@/app/(home)/background/page'
-import { motion, AnimatePresence } from 'framer-motion'
 
 interface Feature {
   name: string
