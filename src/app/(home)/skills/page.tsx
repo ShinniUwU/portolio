@@ -1,5 +1,3 @@
-'use client';
-
 import { useEffect, useState, useRef } from 'react';
 import { FaJs, FaReact, FaNodeJs, FaPython, FaLinux, FaDocker, FaGithub } from 'react-icons/fa';
 import { SiTypescript } from 'react-icons/si';
@@ -15,46 +13,74 @@ const skills = [
   { name: "Docker", icon: <FaDocker className="text-2xl text-blue-300" /> },
 ];
 
-export default function Skills() {
-  const [currentText, setCurrentText] = useState('');
-  const [isTyping, setIsTyping] = useState(true);
-  const [currentIndex, setCurrentIndex] = useState(0);
+interface SkillTypewriterProps {
+  skills: { name: string; icon: JSX.Element }[];
+  typingSpeed: number;
+  pauseDuration: number;
+}
+
+function SkillTypewriter({ skills, typingSpeed, pauseDuration }: SkillTypewriterProps) {
+  // phase: 'typing' or 'deleting'
+  const [phase, setPhase] = useState<'typing' | 'deleting'>('typing');
+  const [currentSkillIndex, setCurrentSkillIndex] = useState(0);
   const [charIndex, setCharIndex] = useState(0);
-  
-  // Use a simple interval-based approach
+  const [displayedText, setDisplayedText] = useState("");
+  const timeoutRef = useRef<NodeJS.Timeout | null>(null);
+
+  const currentSkill = skills[currentSkillIndex].name;
+
+  // Update the displayed text whenever charIndex changes.
   useEffect(() => {
-    let timer: NodeJS.Timeout;
-    
-    if (isTyping) {
-      // Typing mode
-      if (charIndex < skills[currentIndex].name.length) {
-        timer = setTimeout(() => {
-          setCurrentText(skills[currentIndex].name.substring(0, charIndex + 1));
-          setCharIndex(charIndex + 1);
-        }, 150);
+    setDisplayedText(currentSkill.substring(0, charIndex));
+  }, [charIndex, currentSkill]);
+
+  useEffect(() => {
+    // Clear any existing timeout.
+    if (timeoutRef.current) clearTimeout(timeoutRef.current);
+
+    let timeout: NodeJS.Timeout;
+    if (phase === 'typing') {
+      if (charIndex < currentSkill.length) {
+        // Type one more character.
+        timeout = setTimeout(() => {
+          setCharIndex((prev) => prev + 1);
+        }, typingSpeed);
       } else {
-        // Finished typing current word
-        timer = setTimeout(() => {
-          setIsTyping(false);
-        }, 2000);
+        // When the full skill is displayed, pause then start deleting.
+        timeout = setTimeout(() => {
+          setPhase('deleting');
+        }, pauseDuration);
       }
     } else {
-      // Deleting mode
+      // Deleting phase.
       if (charIndex > 0) {
-        timer = setTimeout(() => {
-          setCurrentText(skills[currentIndex].name.substring(0, charIndex - 1));
-          setCharIndex(charIndex - 1);
-        }, 50);
+        timeout = setTimeout(() => {
+          setCharIndex((prev) => prev - 1);
+        }, typingSpeed);
       } else {
-        // Finished deleting, move to next word
-        const nextIndex = (currentIndex + 1) % skills.length;
-        setCurrentIndex(nextIndex);
-        setIsTyping(true);
+        // When deletion is complete, move to the next skill.
+        timeout = setTimeout(() => {
+          setPhase('typing');
+          setCurrentSkillIndex((prev) => (prev + 1) % skills.length);
+        }, typingSpeed);
       }
     }
-    
-    return () => clearTimeout(timer);
-  }, [currentIndex, charIndex, isTyping]);
+    timeoutRef.current = timeout;
+
+    return () => clearTimeout(timeout);
+  }, [phase, charIndex, currentSkill.length, typingSpeed, pauseDuration, skills.length]);
+
+  return (
+    <span className="font-semibold">
+      {displayedText}
+      <span className="animate-pulse">|</span>
+    </span>
+  );
+}
+
+export default function Skills() {
+  const typingSpeed = 100; // milliseconds per character
+  const pauseDuration = 2000; // pause duration after full skill is displayed
 
   return (
     <section id="skills" className="py-20 px-6">
@@ -64,8 +90,8 @@ export default function Skills() {
         </h2>
         <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
           {skills.map((skill, index) => (
-            <div 
-              key={index} 
+            <div
+              key={index}
               className="flex items-center p-4 bg-black/30 rounded-lg shadow-lg transition-transform transform hover:scale-105"
             >
               <div className="mr-4">{skill.icon}</div>
@@ -73,14 +99,11 @@ export default function Skills() {
             </div>
           ))}
         </div>
-        <div className="mt-8 text-gray-300 text-lg h-8">
+        <div className="mt-8 text-gray-300 text-lg">
           <span>Currently proficient in: </span>
-          <span className="font-semibold">
-            {currentText}
-            <span className="animate-pulse">|</span>
-          </span>
+          <SkillTypewriter skills={skills} typingSpeed={typingSpeed} pauseDuration={pauseDuration} />
         </div>
       </div>
     </section>
   );
-} 
+}
