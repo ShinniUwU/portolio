@@ -99,10 +99,6 @@ export default function Skills() {
             </div>
           ))}
         </div>
-        <div className="mt-8 text-gray-300 text-lg">
-          <span>Currently proficient in: </span>
-          <SkillTypewriter skills={skills} typingSpeed={typingSpeed} pauseDuration={pauseDuration} />
-        </div>
       </div>
     </section>
   );
