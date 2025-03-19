@@ -39,6 +39,7 @@ export default function Navbar() {
               <Link href="/docs" className="text-gray-300 hover:text-white transition">Docs</Link>
               <Link href="/progress" className="text-gray-300 hover:text-white transition">Progress</Link>
               <Link href="/statistics" className="text-gray-300 hover:text-white transition">Statistics</Link>
+              <Link href="/testimonials" className="text-gray-300 hover:text-white transition">Testimonials</Link>
               <Link 
                 href="https://github.com/ohemilyy/LunarShell"
                 className="flex items-center space-x-2 bg-white/10 px-4 py-2 rounded-full hover:bg-white/20 transition"

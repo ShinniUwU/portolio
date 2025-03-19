@@ -8,19 +8,19 @@ const content = {
     content: `
 # Installation
 
-LunarShell can be installed with a single command:
+You can set up your environment with a single command:
 
 \`\`\`bash
-curl -fsSL https://shell.lunarlabs.cc/install.sh | sudo bash
+curl -fsSL https://emily.tech/install.sh | sudo bash
 \`\`\`
 
 ## Supported Distributions
 
 - **Ubuntu Server** (20.04 LTS and newer)
-- **Enterprise Linux** (EL8, EL9)
-- **Arch Linux** (minimal installation)
+- **CentOS** (7 and newer)
+- **Debian** (10 and newer)
 
-> **Note**: LunarShell is specifically designed for server environments and may not be suitable for desktop distributions.
+> **Note**: This setup is optimized for server environments.
 
 ## Core Components
 

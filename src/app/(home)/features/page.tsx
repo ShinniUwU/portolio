@@ -1,47 +1,53 @@
+import Slider from "react-slick";
 import { FaRocket, FaShieldAlt, FaBox, FaTerminal } from 'react-icons/fa'
 
-const features = [
+const workExperience = [
   {
-    icon: <FaRocket className="text-4xl text-purple-400" />,
-    title: "Modern Shell",
-    description: "Enhanced prompt powered by Starship with smart configurations"
+    title: "Software Engineer at Tech Company",
+    duration: "June 2021 - Present",
+    description: "Developing scalable web applications using React and Node.js."
   },
   {
-    icon: <FaShieldAlt className="text-4xl text-pink-400" />,
-    title: "Security Focused",
-    description: "Hardened SSH and system security configurations"
+    title: "Systems Administrator at IT Solutions",
+    duration: "January 2019 - May 2021",
+    description: "Managed server infrastructure and ensured system security."
   },
   {
-    icon: <FaBox className="text-4xl text-purple-400" />,
-    title: "Smart Package Management",
-    description: "Optimized package handling for server environments"
-  },
-  {
-    icon: <FaTerminal className="text-4xl text-pink-400" />,
-    title: "Beautiful MOTD",
-    description: "Informative Message of the Day with system metrics"
+    title: "Intern at Startup",
+    duration: "Summer 2018",
+    description: "Assisted in software development and testing."
   }
 ]
 
-export default function Features() {
+export default function WorkExperience() {
+  const settings = {
+    dots: true,
+    infinite: true,
+    speed: 500,
+    slidesToShow: 1,
+    slidesToScroll: 1,
+    autoplay: true,
+    autoplaySpeed: 3000,
+  };
+
   return (
-    <section id="features" className="py-20 px-6 bg-black/20">
+    <section id="work" className="py-20 px-6 bg-black/20">
       <div className="container mx-auto">
         <h2 className="text-3xl md:text-4xl font-bold text-center mb-16 bg-gradient-to-r from-purple-400 to-pink-300 bg-clip-text text-transparent">
-          Features
+          Work Experience
         </h2>
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-          {features.map((feature, index) => (
+        <Slider {...settings}>
+          {workExperience.map((job, index) => (
             <div 
               key={index}
               className="p-6 rounded-2xl bg-gradient-to-br from-white/5 to-white/10 backdrop-blur-sm hover:from-white/10 hover:to-white/15 transition"
             >
-              <div className="mb-4">{feature.icon}</div>
-              <h3 className="text-xl font-semibold text-white mb-2">{feature.title}</h3>
-              <p className="text-gray-300">{feature.description}</p>
+              <h3 className="text-xl font-semibold text-white mb-2">{job.title}</h3>
+              <p className="text-gray-300">{job.duration}</p>
+              <p className="text-gray-400">{job.description}</p>
             </div>
           ))}
-        </div>
+        </Slider>
       </div>
     </section>
   )

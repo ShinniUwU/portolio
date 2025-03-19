@@ -4,10 +4,9 @@ import Navbar from '@/components/Navbar'
 import Footer from '@/components/Footer'
 import Background from '@/app/(home)/background/page'
 import Hero from '@/app/(home)/hero/page'
-import Features from '@/app/(home)/features/page'
-import Install from '@/app/(home)/install/page'
-import TerminalPreview from '@/components/sections/terminal-preview'
-import PreviewSection from '@/components/sections/preview-section'
+import WorkExperience from '@/app/(home)/features/page'
+import Skills from '@/app/(home)/install/page'
+import Testimonials from './testimonials/page'
 
 export default function Home() {
   return (
@@ -18,10 +17,9 @@ export default function Home() {
       <div className="relative z-10">
         <Navbar />
         <Hero />
-        <Features />
-        <PreviewSection />
-        <TerminalPreview />
-        <Install />
+        <WorkExperience />
+        <Skills />
+        <Testimonials />
         <Footer />
       </div>
     </div>
