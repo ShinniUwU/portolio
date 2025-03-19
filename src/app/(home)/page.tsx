@@ -4,8 +4,8 @@ import Navbar from '@/components/Navbar'
 import Footer from '@/components/Footer'
 import Background from '@/app/(home)/background/page'
 import Hero from '@/app/(home)/hero/page'
-import WorkExperience from '@/app/(home)/features/page'
-import Skills from '@/app/(home)/install/page'
+import WorkExperience from '@/app/(home)/experience/page'
+import Skills from '@/app/(home)/skills/page'
 import Testimonials from './testimonials/page'
 
 export default function Home() {

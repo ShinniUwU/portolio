@@ -3,19 +3,24 @@ import { FaRocket, FaShieldAlt, FaBox, FaTerminal } from 'react-icons/fa'
 
 const workExperience = [
   {
-    title: "Software Engineer at Tech Company",
-    duration: "June 2021 - Present",
-    description: "Developing scalable web applications using React and Node.js."
+    title: "Vice President and Co Director at Scala Studios",
+    duration: "2023 - Present",
+    description: "In charge of the company's operations, including financial management, team coordination, and strategic planning."
   },
   {
-    title: "Systems Administrator at IT Solutions",
-    duration: "January 2019 - May 2021",
-    description: "Managed server infrastructure and ensured system security."
+    title: "Systems Administrator at JasmeowsSystem",
+    duration: "2023 - 2025",
+    description: "Managed server infrastructure and ensured system security for clients."
   },
   {
-    title: "Intern at Startup",
-    duration: "Summer 2018",
-    description: "Assisted in software development and testing."
+    title: "Co Director at Darkless LTD",
+    duration: "2024 - Present",
+    description: "Co-directed a hosting company providing bare-metal and VPS solutions, Developed and managed scalable web applications for client services, Worked on backend optimization and server-side security enhancements, Assisted in infrastructure automation and DevOps tasks, Assisted in making a clean website for the Hosting"
+  },
+  {
+    title: "Founder at LunarLabs LLC",
+    duration: "2023 - Present",
+    description: "In charge of the company's operations, including financial management, team coordination, and strategic planning. Also lead of the Game Development Team and Legal Team"
   }
 ]
 

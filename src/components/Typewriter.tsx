@@ -19,6 +19,7 @@ function Typewriter({
   const [currentPhraseIndex, setCurrentPhraseIndex] = useState(0);
   const [isTyping, setIsTyping] = useState(true);
   const timeoutRef = useRef<NodeJS.Timeout>();
+  const completedPhrases = useRef<string[]>([]);
 
   useEffect(() => {
     const currentPhrase = phrases[currentPhraseIndex];
@@ -29,14 +30,11 @@ function Typewriter({
         setDisplayedText(prev => {
           const newText = currentPhrase.substring(0, charIndex + 1);
           if (isList) {
-            // If we're at the first character, add new item to array
             if (charIndex === 0) {
-              return [...prev, newText];
+              return [...completedPhrases.current, newText];
             }
-            // Otherwise update the last item
-            return [...prev.slice(0, -1), newText];
+            return [...completedPhrases.current, newText];
           }
-          // For single line mode, just return array with one item
           return [newText];
         });
         charIndex++;
@@ -44,16 +42,27 @@ function Typewriter({
       } else {
         setIsTyping(false);
         if (!isList) {
+          // For single line mode, cycle through phrases
           timeoutRef.current = setTimeout(() => {
             setDisplayedText([]);
             setCurrentPhraseIndex((prev) => (prev + 1) % phrases.length);
             setIsTyping(true);
           }, pauseDuration);
         } else if (currentPhraseIndex < phrases.length - 1) {
+          // For list mode, add to completed phrases and continue
+          completedPhrases.current = [...completedPhrases.current, currentPhrase];
           timeoutRef.current = setTimeout(() => {
             setCurrentPhraseIndex(prev => prev + 1);
             setIsTyping(true);
           }, pauseDuration / 2);
+        } else {
+          // Start over with empty list after a longer pause
+          timeoutRef.current = setTimeout(() => {
+            completedPhrases.current = [];
+            setDisplayedText([]);
+            setCurrentPhraseIndex(0);
+            setIsTyping(true);
+          }, pauseDuration * 2);
         }
       }
     };
