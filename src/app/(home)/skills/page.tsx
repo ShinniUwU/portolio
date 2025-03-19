@@ -1,4 +1,6 @@
-import { useEffect, useState } from 'react';
+'use client';
+
+import { useEffect, useState, useRef } from 'react';
 import { FaJs, FaReact, FaNodeJs, FaPython, FaLinux, FaDocker, FaGithub } from 'react-icons/fa';
 import { SiTypescript } from 'react-icons/si';
 
@@ -14,30 +16,45 @@ const skills = [
 ];
 
 export default function Skills() {
-  const [displayedText, setDisplayedText] = useState("");
-  const [currentSkillIndex, setCurrentSkillIndex] = useState(0);
-  const typingSpeed = 100; // Speed of typing in milliseconds
-  const pauseDuration = 2000; // Pause duration after each skill
-
+  const [currentText, setCurrentText] = useState('');
+  const [isTyping, setIsTyping] = useState(true);
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [charIndex, setCharIndex] = useState(0);
+  
+  // Use a simple interval-based approach
   useEffect(() => {
-    const currentSkill = skills[currentSkillIndex].name;
-    let charIndex = 0;
-
-    const typeSkill = () => {
-      if (charIndex < currentSkill.length) {
-        setDisplayedText((prev) => prev + currentSkill.charAt(charIndex));
-        charIndex++;
-        setTimeout(typeSkill, typingSpeed);
+    let timer: NodeJS.Timeout;
+    
+    if (isTyping) {
+      // Typing mode
+      if (charIndex < skills[currentIndex].name.length) {
+        timer = setTimeout(() => {
+          setCurrentText(skills[currentIndex].name.substring(0, charIndex + 1));
+          setCharIndex(charIndex + 1);
+        }, 150);
       } else {
-        setTimeout(() => {
-          setDisplayedText(""); // Clear the text
-          setCurrentSkillIndex((prev) => (prev + 1) % skills.length); // Move to the next skill
-        }, pauseDuration);
+        // Finished typing current word
+        timer = setTimeout(() => {
+          setIsTyping(false);
+        }, 2000);
       }
-    };
-
-    typeSkill();
-  }, [currentSkillIndex]);
+    } else {
+      // Deleting mode
+      if (charIndex > 0) {
+        timer = setTimeout(() => {
+          setCurrentText(skills[currentIndex].name.substring(0, charIndex - 1));
+          setCharIndex(charIndex - 1);
+        }, 50);
+      } else {
+        // Finished deleting, move to next word
+        const nextIndex = (currentIndex + 1) % skills.length;
+        setCurrentIndex(nextIndex);
+        setIsTyping(true);
+      }
+    }
+    
+    return () => clearTimeout(timer);
+  }, [currentIndex, charIndex, isTyping]);
 
   return (
     <section id="skills" className="py-20 px-6">
@@ -47,15 +64,21 @@ export default function Skills() {
         </h2>
         <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
           {skills.map((skill, index) => (
-            <div key={index} className="flex items-center p-4 bg-black/30 rounded-lg shadow-lg transition-transform transform hover:scale-105">
+            <div 
+              key={index} 
+              className="flex items-center p-4 bg-black/30 rounded-lg shadow-lg transition-transform transform hover:scale-105"
+            >
               <div className="mr-4">{skill.icon}</div>
               <span className="text-gray-300 text-lg">{skill.name}</span>
             </div>
           ))}
         </div>
-        <div className="mt-8 text-gray-300 text-lg">
+        <div className="mt-8 text-gray-300 text-lg h-8">
           <span>Currently proficient in: </span>
-          <span className="font-semibold">{displayedText}</span>
+          <span className="font-semibold">
+            {currentText}
+            <span className="animate-pulse">|</span>
+          </span>
         </div>
       </div>
     </section>
