@@ -73,13 +73,6 @@ export default function Skills() {
             </div>
           ))}
         </div>
-        <div className="mt-8 text-gray-300 text-lg h-8">
-          <span>Currently proficient in: </span>
-          <span className="font-semibold">
-            {currentText}
-            <span className="animate-pulse">|</span>
-          </span>
-        </div>
       </div>
     </section>
   );

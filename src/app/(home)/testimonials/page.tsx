@@ -3,6 +3,7 @@
 import { FaQuoteLeft, FaArrowLeft, FaArrowRight } from 'react-icons/fa';
 import { motion } from 'framer-motion';
 import Slider from "react-slick";
+import 'slick-carousel/slick/slick.css';
 
 interface Testimonial {
   name: string;
